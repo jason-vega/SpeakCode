@@ -32,27 +32,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// AWS
-var AWS = require('aws-sdk');
-var uuid = require('node-uuid');
-var s3 = new AWS.S3();
-var bucketName = 'elasticbeanstalk-us-west-1-116601934919';
-var keyName = 'input/sup.txt';
-var bodyText = "woah";
-var params = {
-  ACL: "authenticated-read",
-  Body: bodyText;
-  Bucket: bucketName,
-  Key: keyName
-};
-
-s3.putObject(params, function(err, data) {
-  if (err) { 
-    console.log(err);
-  }
-  else {
-    console.log("SUCCESS");
-  }
-});
-
 module.exports = app;
