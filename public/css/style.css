@@ -1,0 +1,35 @@
+#welcome {
+  background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+}
+
+#title, #hint {
+  opacity: 0;
+}
+
+#title {
+  font-size: 8vmax;
+}
+
+#hint {
+  font-size: 4vmax;
+}
+
+@media screen and (min-width: 768px) {
+  #title {
+    font-size: calc(768px * 8 / 100);
+  }
+
+  #hint {
+    font-size: calc(768px * 4 / 100);
+  }
+}
+
+@media screen and (max-width: 576px) {
+  #title {
+    font-size: calc(576px * 8 / 100);
+  }
+
+  #hint {
+    font-size: calc(576px * 4 / 100);
+  }
+}
