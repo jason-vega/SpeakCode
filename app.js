@@ -29,17 +29,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(request, response) {
+app.get('/upload', function(request, response) {
   s3.putObject(params, function(err, data) {
     if (err) { 
-      console.log(err);
+      response.send(err);
     }
     else {
-      console.log("SUCCESS");
+      response.send("SUCCESS");
     }
   });
-
-  response.sendFile('public/index.html');
 });
 
 // catch 404 and forward to error handler
