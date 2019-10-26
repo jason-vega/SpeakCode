@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript">
+    // Create recorder
+        const recorder = require('node-record-lpcm16')
+        const fs = require('fs')
+
+        const file = fs.createWriteStream('test.wav', { encoding: 'binary' })
+
+        const recording = recorder.record()
+
+        // Sets up local server (http://localhost:3000/)
+        app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+        $("#start").onclick = function() {
+                recording.stream().pipe(file);
+        };
+
+        $("#end").onclick = function() {
+                recording.stop();
+        };
+  </script>
+</head>
+<body>
+  <button type="button" id="start">Start record</button>
+  <button type="button" id="stop">Stop record</button>
+</body>
+</html>
