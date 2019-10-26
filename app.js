@@ -30,14 +30,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/upload', function(request, response) {
-  s3.putObject(params, function(err, data) {
+  response.send("YO");
+  /*s3.putObject(params, function(err, data) {
     if (err) { 
       response.send(err);
     }
     else {
       response.send("SUCCESS");
     }
-  });
+  });*/
 });
 
 // catch 404 and forward to error handler
