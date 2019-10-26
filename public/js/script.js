@@ -12,4 +12,8 @@ $(document).ready(function () {
   $("#title").fadeTo(1250, 1, function() {
     transitionHint(0);
   });
+
+  $.get('/upload', function(data) {
+    console.log(data);
+  });
 });
