@@ -6,6 +6,9 @@ var logger = require('morgan');
 
 var app = express();
 
+// Used for local server setup for testing
+const port = 3000;
+
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
@@ -33,3 +36,6 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+// Sets up local server (http://localhost:3000/)
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
