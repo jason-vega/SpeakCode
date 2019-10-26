@@ -15,5 +15,5 @@ $(document).ready(function () {
 
   $.get('/upload', function(data) {
     console.log(data);
-  };
+  });
 });
