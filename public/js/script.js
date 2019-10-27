@@ -45,6 +45,8 @@ function audioConfigStart() {
 
       document.getElementById("console").scrollTop =
         document.getElementById("console").scrollHeight;
+
+      writeCode(main(e.result.text));
     }
   }
 
@@ -149,6 +151,27 @@ function getCode() {
   return result;
 }
 
+function moveCursor(line, pos) {
+  if (line >= 1 && line <= $(".editTextLine").length) {
+    $("#line" + line).focus().caret(pos);
+  }
+}
+
+function writeCode(data) {
+  var lines = data[0];
+  var finalPos = data[1];
+  var startLine = $(document.activeElement);
+  var baseNum = parseInt(startLine.attr('id').replace("line", ""));
+
+  if (finalPos != -1) {
+    for (var i = 0; i < lines.length; i++) {
+      addLine(baseNum + i, lines[i]);
+    }
+
+    moveCursor(baseNum + finalPos - 1, -1);
+  }
+}
+
 function run() {
   var code = getCode();
 
@@ -229,18 +252,14 @@ $(document).delegate('.editTextLine', 'keydown', function(e) {
     var lineNumber = inputElement.id.replace("line", "");
     var caret = $("#line" + lineNumber).caret();
 
-    if (parseInt(lineNumber) > 1) {
-      $("#line" + (parseInt(lineNumber) - 1)).focus().caret(caret);
-    }
+    moveCursor(parseInt(lineNumber) - 1, caret);
   }
   else if (keyCode == 40) { // Arrow down
     e.preventDefault();
     var inputElement = e.target;
     var lineNumber = inputElement.id.replace("line", "");
 
-    if (parseInt(lineNumber) < $(".editTextLine").length) {
-      $("#line" + (parseInt(lineNumber) + 1)).focus();
-    }
+    moveCursor(parseInt(lineNumber) + 1, caret);
   }
   else if (keyCode == 8) { // Backspace
     var inputElement = e.target;
