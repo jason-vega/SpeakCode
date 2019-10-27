@@ -1,4 +1,59 @@
 var hints = ["Say \"start\" to begin coding", "First time? Say \"teach me\" to learn!"];
+var key = "1cb33c6058174b61ba2cdd6352995c62";
+var region = "westus";
+var language = "en-US";
+var SpeechSDK;
+var recognizer;
+var reco;
+
+var soundContext = undefined;
+
+try {
+  var AudioContext = window.AudioContext || window.webkitAudioContext || false;
+
+  if (AudioContext) {
+    soundContext = new AudioContext()
+  } 
+  else {
+    console.log("Audio context not supported!");
+  }
+}
+catch (e) {
+    console.log("No audio context found: " + e);
+}
+
+function Initialize(onComplete) {
+  if (!!window.SpeechSDK) {
+      onComplete(window.SpeechSDK);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  var audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
+  var speechConfig = SpeechSDK.SpeechConfig.fromSubscription(key, region);
+
+  speechConfig.speechRecognitionLanguage = language;
+  reco = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
+
+  reco.recognized = function(s, e) {
+    if (e.result.text !== "") {
+      $("#console").html($("#console").html() + e.result.text + "<br>");
+
+      document.getElementById("console").scrollTop =
+        document.getElementById("console").scrollHeight;
+    }
+  }
+
+  reco.startContinuousRecognitionAsync();
+
+  Initialize(function(speechSdk) {
+    SpeechSDK = speechSdk;
+
+    if (typeof RequestAuthorizationToken === "function") {
+      RequestAuthorizationToken();
+    }
+  });
+});
 
 function start() {
   $("#welcome").fadeOut(1000, function() {

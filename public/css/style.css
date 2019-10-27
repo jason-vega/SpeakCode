@@ -52,6 +52,10 @@
   font-family: Courier;
 }
 
+.outputLineBackground {
+  border-bottom: 1px solid #dee2e6 !important;
+}
+
 .outputLineBackground:hover {
   background-color: #2484ff;
 }
