@@ -66,10 +66,15 @@ if( data[i] == "variable" || data[i] == "var" || data[i] == "int" || data[i] == 
   lineNum = 2;
 }
 //For loop
-else if( data[i] == "for" || data[i] == "four" || data[i] == "4" )
+else if( data[i] == "for" || data[i] == "four" || data[i] == "4" || data[i] == "or" )
 {
   finalOutput += "for( ";
   i++;
+
+  //if( !isNaN(data[i]) )
+  //{
+  //  
+  //}
 
   var gen = genericProcess( data, i );
 
@@ -83,7 +88,7 @@ else if( data[i] == "for" || data[i] == "four" || data[i] == "4" )
   i++;
 
   gen = genericIncrement( data, i );
-  finalOutput += gen[0] + " ) { \n\n}";
+  finalOutput += gen[0] + " ) { \n\t\n}";
   i++;
 
   lineNum = 3;
@@ -95,7 +100,7 @@ else if( data[i] == "if" || data[i] == "bif" )
   i++;
 
   var gen = genericProcess( data, i );
-  finalOutput += gen[0] + " ) {\n\n}";
+  finalOutput += gen[0] + " ) {\n\t\n}";
   i = gen[1];
   i++;
 
@@ -108,7 +113,7 @@ else if( data[i] == "while" )
   i++;
 
   var gen = genericProcess( data, i );
-  finalOutput += gen[0] + " ) {\n\n}";
+  finalOutput += gen[0] + " ) {\n\t\n}";
   i = gen[1];
   i++; 
 
@@ -143,67 +148,101 @@ else if( data[i] == "console" || data[i] == "print" )
   finalOutput = finalOutput.substring( 0, finalOutput.length - 1) + " ); ";
   lineNum = 2;
 }
-else 
+// Post/Pre Increment/Decrement
+else if( data[i+1] == "plus" || data[i+1] == "minus" )
 {
-  finalOutput += data[i] + " ";
-  i++;
+  if( data[i] == "plus" || data[i] == "+" || data[i] == "minus" || data[i] == "-" )
+  {
 
-  if( data[i] == "plus" || data[i] == "+" )
-  {
-    finalOutput = finalOutput.substring(0, finalOutput.length - 1) + "++ ";
-    i+=2;
-  }
-  else if( data[i] == "minus" || data[i] == "-" )
-  {
-    finalOutput = finalOutput.substring(0, finalOutput.length - 1) + "-- ";
-    i+=2;
-  }
+    if( data[i] == "plus" || data[i] == "+" )
+    {
+      finalOutput += "++";
+      i+=2;
+    }
+    else if( data[i] == "minus" || data[i] == "-" )
+    {
+      finalOutput += "--";
+      i+=2;
+    }
 
-  if( i >= data.length )
-  {
-    finalOutput = finalOutput.substring(0, finalOutput.length - 1);
+    while( i < data.length )
+    {
+      finalOutput += data[i++].toLowerCase() + "_";
+    }
+    finalOutput = finalOutput.substring(0, finalOutput.length - 1) + ";";
   }
   else
   {
-    while( i < data.length )
+    while( data[i] != "plus" && data[i] != "+" && data[i] != "minus" && data[i] != "-" )
     {
-      if( data[i] == "plus" || data[i] == "+" )
-      {
-        finalOutput += "+ ";
-      }
-      else if( data[i] == "minus" || data[i] == "-" )
-      {
-        finalOutput += "- ";
-      }
-      else if( data[i] == "times" )
-      {
-        finalOutput += "* ";
-      }
-      else if( data[i] == "equals" || data[i] == "equal" || data[i] == "=")
-      {
-        finalOutput += "= ";
-      }
-      else if( !isNaN(data[i]) )
-      {
-        finalOutput += data[i] + " ";
-      }
-      else 
-      {
-        while( data[i] != "plus" && data[i] != "+" && data[i] != "minus" && data[i] != "-" && data[i] != "times" )
-        {
-          finalOutput += data[i] + "_";
-          i++;
-          if( i >= data.length )
-          {
-            break;
-          }
-        }
-        finalOutput = finalOutput.substring(0, finalOutput.length - 1);
-      }
-      i++;
+      finalOutput += data[i++].toLowerCase() + "_";
+    }
+    finalOutput = finalOutput.substring(0, finalOutput.length - 1);
+
+    if( data[i] == "plus" || data[i] == "+" )
+    {
+      finalOutput += "++;";
+    }
+    else
+    {
+      finalOutput += "--;";
     }
   }
-  finalOutput += ";";
+}
+// normal variable assignment
+else if( data[i] == "equals" || data[i] == "equal" || data[i+1] == "equals" || data[i+1] == "equal" || data[i+2] == "equals" || data[i+2] == "equal" )
+{
+  while( data[i] != "equals" && data[i] != "equal" )
+  {
+    finalOutput += data[i++].toLowerCase() + "_";
+  }
+  finalOutput = finalOutput.substring(0, finalOutput.length - 1) + " = ";
+  i+=1;
+
+  while( i < data.length )
+  {
+    if( data[i] == "plus" || data[i] == "+" )
+    {
+      finalOutput += "+ ";
+    }
+    else if( data[i] == "minus" || data[i] == "-" )
+    {
+      finalOutput += "- ";
+    }
+    else if( data[i] == "times" )
+    {
+      finalOutput += "* ";
+    }
+    else if( data[i] == "equals" || data[i] == "equal" || data[i] == "=")
+    {
+      finalOutput += "= ";
+    }
+    else if( !isNaN(data[i]) )
+    {
+      finalOutput += data[i] + " ";
+    }
+    else 
+    {
+      while( data[i] != "plus" && data[i] != "+" && data[i] != "minus" && data[i] != "-" && data[i] != "times" )
+      {
+        finalOutput += data[i] + "_";
+        i++;
+        if( i >= data.length )
+        {
+          break;
+        }
+      }
+      i--;
+      finalOutput = finalOutput.substring(0, finalOutput.length - 1) + " ";
+    }
+    i++;
+  }
+  finalOutput = finalOutput.substring(0, finalOutput.length - 1) + ";";
+}
+else 
+{
+    // ERROR IN HERE
+    lineNum = -1;
 }
 
 //alert( contents );
