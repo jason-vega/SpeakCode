@@ -46,7 +46,38 @@ function audioConfigStart() {
       document.getElementById("console").scrollTop =
         document.getElementById("console").scrollHeight;
 
-      writeCode(main(e.result.text));
+      var stripped = e.result.text.toLowerCase()
+        .replace(/[,./!@#$%^&*();']/g, "").split(" ");
+
+      console.log(stripped);
+
+      if (stripped.length == 3 && stripped[0] == "delete" && // Delete line
+        stripped[1] == "line" && Number.isInteger(parseInt(stripped[2]))) {
+        removeLine(parseInt(stripped[2]), "");
+      }
+      if (stripped.length == 3 && stripped[0] == "change" && // Change line
+        stripped[1] == "line" && Number.isInteger(parseInt(stripped[2]))) {
+        removeLine(parseInt(stripped[2]), "");
+        moveCursor(parseInt(stripped[2]) - 1, -1);
+      }
+      else if (stripped.length == 5 && stripped[0] == "delete" && // Delete lines
+        stripped[1] == "lines" && Number.isInteger(parseInt(stripped[2])) &&
+        stripped[3] == "through" && Number.isInteger(parseInt(stripped[4]))) {
+        for (var i = parseInt(stripped[2]); i <= parseInt(stripped[4]); i++) {
+          removeLine(stripped[2], "");
+        }
+      }
+      else if (stripped.length == 4 && stripped[0] == "go" && /// Go to line
+        stripped[1] == "to" && stripped[2] == "line" && 
+        Number.isInteger(parseInt(stripped[3]))) {
+        moveCursor(parseInt(stripped[3]), -1);
+      }
+      else if (stripped.length == 1 && stripped[0] == "run") {
+        run();
+      }
+      else {
+        writeCode(main(e.result.text));
+      }
     }
   }
 
@@ -74,7 +105,6 @@ document.addEventListener('click', function() {
 
   if(!hasStarted) {
     start();
-    hasStarted = true;
   }
 });
 
@@ -120,7 +150,9 @@ function addLine(lineNumber, text) {
 }
 
 function removeLine(lineNumber, remainder) {
-  $("#line" + lineNumber).parent().parent().remove();
+  if ($(".editTextLine").length > 1) {
+    $("#line" + lineNumber).parent().parent().remove();
+  }
 
   if (parseInt(lineNumber) > 1) {
     var len = $("#line" + parseInt(lineNumber - 1)).val().length; 
@@ -128,6 +160,9 @@ function removeLine(lineNumber, remainder) {
     $("#line" + parseInt(lineNumber - 1)).focus()
       .val($("#line" + parseInt(lineNumber - 1)).val() + remainder);
     $("#line" + parseInt(lineNumber - 1)).caret(len);
+  }
+  else if (parseInt(lineNumber) == 1) {
+    $("#line" + parseInt(lineNumber + 1)).focus()
   }
 
   updateLineNumbers();
@@ -168,12 +203,12 @@ function writeCode(data) {
   var startLine = $(document.activeElement);
   var baseNum = parseInt(startLine.attr('id').replace("line", ""));
 
-  if (finalPos != -1) {
+  if (finalPos > 0) {
     for (var i = 0; i < lines.length; i++) {
-      addLine(baseNum + i, lines[i]);
+      addLine(baseNum + i + 1, lines[i]);
     }
 
-    moveCursor(baseNum + finalPos - 1, -1);
+    moveCursor(baseNum + finalPos, -1);
   }
 }
 
@@ -281,9 +316,5 @@ $(document).delegate('.editTextLine', 'keydown', function(e) {
 $(document).ready(function () {
   $("#title").fadeTo(1250, 1, function() {
     transitionHint(0);
-  });
-
-  $.get('/upload', function(data) {
-    console.log(data);
   });
 });
