@@ -2252,13 +2252,11 @@ var MicAudioSource = /** @class */ (function () {
             }
             _this.privInitializeDeferral = new Exports_2.Deferred();
             _this.createAudioContext();
-            var nav = navigator;
+            var nav = window.navigator;
             var getUserMedia = (nav.getUserMedia ||
                 nav.webkitGetUserMedia ||
                 nav.mozGetUserMedia ||
                 nav.msGetUserMedia);
-
-            console.log(getUserMedia + " USER MEDIA!!!!");
 
             if (!!nav.mediaDevices) {
                 getUserMedia = function (constraints, successCallback, errorCallback) {
