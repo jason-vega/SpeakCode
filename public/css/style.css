@@ -23,6 +23,10 @@
   width: 100%;
 }
 
+*:focus {
+  outline: none;
+}
+
 .active {
   background-color: #e9e8fe;
 }
