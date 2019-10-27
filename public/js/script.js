@@ -12,7 +12,7 @@ try {
   var AudioContext = window.AudioContext || window.webkitAudioContext || false;
 
   if (AudioContext) {
-    soundContext = new AudioContext()
+    soundContext = new AudioContext();
   } 
   else {
     console.log("Audio context not supported!");
