@@ -2,8 +2,10 @@ function main( contents ) {
 // Translate speech to code
 var finalOutput = "";
 var lineNum = -1;
-var data = contents.split(" ");
+var data = contents.split(/[.,!?;!@#$%^&*()<>:"'`~ ]/);
 var i = 0;
+
+alert(data);
 
 // Variables
 if( data[i] == "variable" || data[i] == "var" || data[i] == "int" || data[i] == "integer" || data[i] == "string" )
@@ -206,6 +208,7 @@ else
 //alert( contents );
 //alert( finalOutput );
 
-var output = finalOutput.split();
+lineNum--;
+var output = finalOutput.split("\n");
 return [output, lineNum];
 }
