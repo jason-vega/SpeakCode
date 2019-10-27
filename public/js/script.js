@@ -1,4 +1,4 @@
-var hints = ["Say \"start\" to begin coding", "...or click anywhere to begin"];
+var hints = ["A more accessible JavaScript IDE", "Hands-free programming experience", "Compile your voice"];
 var key = "5c60501024b541cb9054d27b0f5bcebf";
 var region = "westus";
 var language = "en-US";
