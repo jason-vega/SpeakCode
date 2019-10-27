@@ -39,7 +39,9 @@ function audioConfigStart() {
 
   reco.recognized = function(s, e) {
     if (e.result.text !== "") {
-      $("#console").html($("#console").html() + e.result.text + "<br>");
+      $("#console").html('<span style="color: #797777;">' + 
+        $("#console").text() + '</span> <span style="color: white;">' + 
+        e.result.text + '</span> ');
 
       document.getElementById("console").scrollTop =
         document.getElementById("console").scrollHeight;
@@ -189,11 +191,11 @@ $(document).delegate('.editTextLine', 'blur', function(e) {
 
 $(".nav-item").mouseover(function() {
   $(this).animate({
-    backgroundColor: '#d9d9d9'
+    backgroundColor: 'rgb(99, 99, 99)'
   }, 200);
 }).mouseout(function() {
   $(this).animate({
-    backgroundColor: '#f8f9fa'
+    backgroundColor: '#424141'
   }, 200);
 });
 
