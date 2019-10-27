@@ -1,5 +1,5 @@
 var hints = ["Say \"start\" to begin coding", "First time? Say \"teach me\" to learn!"];
-var key = "1cb33c6058174b61ba2cdd6352995c62";
+var key = "5c60501024b541cb9054d27b0f5bcebf";
 var region = "westus";
 var language = "en-US";
 var SpeechSDK;
@@ -39,9 +39,7 @@ function audioConfigStart() {
 
   reco.recognized = function(s, e) {
     if (e.result.text !== "") {
-      $("#console").html("<span style='color: #868686;'>" + 
-        $("#console").text() + "</span> <span style='color: white;'>" +
-        e.result.text + "</span> ");
+      $("#console").html($("#console").html() + e.result.text + "<br>");
 
       document.getElementById("console").scrollTop =
         document.getElementById("console").scrollHeight;

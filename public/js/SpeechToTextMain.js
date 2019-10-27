@@ -3,7 +3,7 @@ function main( contents ) {
 var finalOutput = "";
 var lineNum = -1;
 contents = contents.toLowerCase();
-var data = contents.split(/[,./<>?!@#$%^& ]+/);
+var data = contents.split(/[.,!?;!@#$%^&*()<>:"'`~ ]+/);
 var i = 0;
 
 //alert(data);
