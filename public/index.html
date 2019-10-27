@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1,hrink-to-fit=no">
+  <title>SpeakCode</title>
+  <script src="https://kit.fontawesome.com/6951c6a5f0.js"></script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -10,13 +12,45 @@
   <div class="container-fluid">
     <div id="welcome" class="row vh-100 align-items-center text-center">
       <div class="col">
-        <h1 id="title" class="font-weight-light mb-3">SpeechCode</h1>
+        <h1 id="title" class="font-weight-light mb-3">SpeakCode</h1>
         <h2 id="hint" class="font-weight-light">Say "start" to begin coding</h2>
       </div>
+    </div>
+    <div id="ide" class="row vh-100 align-items-center">
+      <div class="col vh-100">
+        <div class="row h-75 border-bottom">
+          <div id="edit" class="col-7 border-right h-100" 
+            style="overflow-y: scroll;">
+          </div>
+          <div id="output" class="col p-0 h-100">
+            <nav class="navbar navbar-light bg-light p-0">
+              <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item" style="cursor: pointer;" onclick="run()">
+                  <i class="fas fa-play" style="color: green"></i> &nbsp;Run
+                </li>
+              </ul>
+            </nav>
+            <div id="textOutput" style="overflow-y: scroll;">
+              <p id="textOutputText"></p>
+            </div>
+          </div>
+        </div>
+        <div class="row h-25">
+          <div id="console" class="col p-3">
+            Console
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="help">
+      help
     </div>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+  <script src="js/jquery.caret.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="js/script.js"></script>
