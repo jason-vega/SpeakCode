@@ -3,7 +3,7 @@ function main( contents ) {
 var finalOutput = "";
 var lineNum = -1;
 contents = contents.toLowerCase();
-var data = contents.split(/[.,!?;!@#$%^&*()<>:"'`~ ]+/);
+var data = contents.replace(/[.,\/#!$%\^&\*;:{}\_`~()]/g,"").split(/[.,!?;!@#$%^&*()<>:"'`~ ]+/);
 var i = 0;
 
 //alert(data);
@@ -14,7 +14,7 @@ if( data[i] == "variable" || data[i] == "var" || data[i] == "int" || data[i] == 
   finalOutput += "var ";
   i++;
 
-  while( data[i] != "equals" )
+  while( data[i] != "equals" && data[i] != "equal" && data[i] != "=" )
   {
     finalOutput += data[i].toLowerCase() + "_";
     i++;
@@ -37,11 +37,11 @@ if( data[i] == "variable" || data[i] == "var" || data[i] == "int" || data[i] == 
         break;
       }
   
-      if( data[i] == "plus" )
+      if( data[i] == "plus" || data[i] == "+" )
       {
         finalOutput+= " + ";
       }
-      else if( data[i] == "minus" ) 
+      else if( data[i] == "minus" || data[i] == "-" ) 
       {
         finalOutput += " - ";
       }
@@ -57,7 +57,7 @@ if( data[i] == "variable" || data[i] == "var" || data[i] == "int" || data[i] == 
   {
     while( i < data.length ) 
     {
-      finalOutput += data[i].toLowerCase() + " ";
+      finalOutput += "\"" + data[i].toLowerCase() + "\" ";
       i++;
     }
     finalOutput = finalOutput.substring( 0, finalOutput.length - 1);
@@ -66,7 +66,7 @@ if( data[i] == "variable" || data[i] == "var" || data[i] == "int" || data[i] == 
   lineNum = 2;
 }
 //For loop
-else if( data[i] == "for" )
+else if( data[i] == "for" || data[i] == "four" || data[i] == "4" )
 {
   finalOutput += "for( ";
   i++;
@@ -83,19 +83,19 @@ else if( data[i] == "for" )
   i++;
 
   gen = genericIncrement( data, i );
-  finalOutput += gen[0] + " ) \n{ \n\n}";
+  finalOutput += gen[0] + " ) { \n\n}";
   i++;
 
   lineNum = 3;
 }
 //If statement
-else if( data[i] == "if" )
+else if( data[i] == "if" || data[i] == "bif" )
 {
   finalOutput += "if( ";
   i++;
 
   var gen = genericProcess( data, i );
-  finalOutput += gen[0] + " )\n{\n\n}";
+  finalOutput += gen[0] + " ) {\n\n}";
   i = gen[1];
   i++;
 
@@ -108,7 +108,7 @@ else if( data[i] == "while" )
   i++;
 
   var gen = genericProcess( data, i );
-  finalOutput += gen[0] + " )\n{\n\n}";
+  finalOutput += gen[0] + " ) {\n\n}";
   i = gen[1];
   i++; 
 
@@ -148,12 +148,12 @@ else
   finalOutput += data[i] + " ";
   i++;
 
-  if( data[i] == "plus" )
+  if( data[i] == "plus" || data[i] == "+" )
   {
     finalOutput = finalOutput.substring(0, finalOutput.length - 1) + "++ ";
     i+=2;
   }
-  else if( data[i] == "minus" )
+  else if( data[i] == "minus" || data[i] == "-" )
   {
     finalOutput = finalOutput.substring(0, finalOutput.length - 1) + "-- ";
     i+=2;
@@ -161,17 +161,17 @@ else
 
   if( i >= data.length )
   {
-    finalOutput = finalOutput.substring(0, finalOutput.length - 1) + ";";
+    finalOutput = finalOutput.substring(0, finalOutput.length - 1);
   }
   else
   {
     while( i < data.length )
     {
-      if( data[i] == "plus" )
+      if( data[i] == "plus" || data[i] == "+" )
       {
         finalOutput += "+ ";
       }
-      else if( data[i] == "minus" )
+      else if( data[i] == "minus" || data[i] == "-" )
       {
         finalOutput += "- ";
       }
@@ -179,7 +179,7 @@ else
       {
         finalOutput += "* ";
       }
-      else if( data[i] == "equals" || data[i] == "equal" )
+      else if( data[i] == "equals" || data[i] == "equal" || data[i] == "=")
       {
         finalOutput += "= ";
       }
@@ -189,7 +189,7 @@ else
       }
       else 
       {
-        while( data[i] != "plus" && data[i] != "minus" && data[i] != "times" )
+        while( data[i] != "plus" && data[i] != "+" && data[i] != "minus" && data[i] != "-" && data[i] != "times" )
         {
           finalOutput += data[i] + "_";
           i++;

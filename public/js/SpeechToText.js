@@ -3,13 +3,13 @@ function genericIncrement( data, i )
   var rtn = "";
   var earlyLeave = false;
 
-  if( data[i] == "plus" )
+  if( data[i] == "plus" || data[i] == "+" )
   {
     earlyLeave = true;
     rtn += "++";
     i+=2;
   } 
-  else if( data[i] == "minus" ) 
+  else if( data[i] == "minus" || data[i] == "-" ) 
   {
     earlyLeave = true;
     rtn += "--";
@@ -28,13 +28,13 @@ function genericIncrement( data, i )
   }
   else
   {
-    while( data[i] != "plus" && data[i] != "minus" )
+    while( data[i] != "plus" && data[i] != "+" && data[i] != "minus" && data[i] != "-" )
     {
       rtn += data[i].toLowerCase() + "_";
       i+=2;
     }
     rtn = rtn.substring(0, rtn.length - 1);
-    if( data[i] == "plus" ) 
+    if( data[i] == "plus" || data[i] == "+" ) 
     {
       rtn += "++";
     }
@@ -51,7 +51,7 @@ function genericIncrement( data, i )
 function genericProcess( data, i )
 {
   var rtn = "";
-  while( data[i] != "plus" && data[i] != "minus" && data[i] != "times" && data[i] != "less" && data[i] != "greater" && data[i] != "equals" && data[i] != "is" && data[i] != "equal")
+  while( data[i] != "plus" && data[i] != "minus" && data[i] != "times" && data[i] != "less" && data[i] != "greater" && data[i] != "equals" && data[i] != "is" && data[i] != "equal" && data[i] != "+" && data[i] != "-" && data[i] != "=" )
   {
     if( data[i] == "variable" || data[i] == "var" || data[i] == "integer" || data[i] == "int" )
     {
@@ -68,11 +68,11 @@ function genericProcess( data, i )
     i+=1;
   }
 
-  if( data[i] == "plus" )
+  if( data[i] == "plus" || data[i] == "+" )
   {
     rtn += " + ";
   }
-  else if( data[i] == "minus" )
+  else if( data[i] == "minus" || data[i] == "-" )
   {
     rtn += " - ";
   }
@@ -87,10 +87,10 @@ function genericProcess( data, i )
     { 
       i++;
     }
-    if( data[i] == "equals" || data[i] == "equal" )
+    if( data[i] == "equals" || data[i] == "equal" || data[i] == "=" )
     {
       rtn += " <= ";
-      if( data[i+1] == "to" || data[i+1] == "too" )
+      if( data[i+1] == "to" || data[i+1] == "too" || data[i+1] == "two" || data[i+1] == "2" )
       {
         i+=1;
       }
@@ -110,10 +110,10 @@ function genericProcess( data, i )
       i++;
     }
 
-    if( data[i] == "equals" || data[i] == "equal" )
+    if( data[i] == "equals" || data[i] == "equal" || data[i] == "=" )
     {
       rtn += " >= ";
-      if( data[i+1] == "to" || data[i+1] == "too" )
+      if( data[i+1] == "to" || data[i+1] == "too" || data[i+1] == "two" || data[i+1] == "2" )
       {
         i+=1;
       }
@@ -124,9 +124,9 @@ function genericProcess( data, i )
       rtn += " > ";
     }
   }
-  else if( data[i] == "equals" || data[i] == "equal" )
+  else if( data[i] == "equals" || data[i] == "equal" || data[i] == "=" )
   {
-    if( data[i+1] == "equals" || data[i] == "equal" ) 
+    if( data[i+1] == "equals" || data[i+1] == "equal" || data[i+1] == "=" ) 
     {
       rtn += " == ";
       i+=1;
