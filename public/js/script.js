@@ -49,8 +49,6 @@ function audioConfigStart() {
       var stripped = e.result.text.toLowerCase()
         .replace(/[,./!@#$%^&*();']/g, "").split(" ");
 
-      console.log(stripped);
-
       if (stripped.length == 3 && stripped[0] == "delete" && // Delete line
         stripped[1] == "line" && Number.isInteger(parseInt(stripped[2]))) {
         removeLine(parseInt(stripped[2]), "");
@@ -176,7 +174,6 @@ function removeLine(lineNumber, remainder) {
 
 function clearConsole(numLines){
   for ( var x = numLines; x > 0; x-- ){
-    console.log('REMOVE');
     removeLine(x, "");
   }
 }
