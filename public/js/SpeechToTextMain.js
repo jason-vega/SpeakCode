@@ -4,13 +4,13 @@ var finalOutput = "";
 var lineNum = -1;
 var tabNum = 0;
 contents = contents.toLowerCase();
-var data = contents.replace(/[.,\/#!$%\^&\*;:{}\_`~()]/g,"").split(/[.,!?;!@#$%^&*()<>:"'`~ ]+/);
+var data = contents.replace(/[.,\/#!$%\^&\*?;:{}\_`~()]/g,"").split(/[.,!?;!@#$%^&*()<>:"'`~ ]+/);
 var i = 0;
 
 //alert(data);
 
 // Variables
-if( data[i] == "variable" || data[i] == "var" || data[i] == "int" || data[i] == "integer" || data[i] == "string" )
+if( data[i] == "variable" || data[i] == "var" || data[i] == "int" || data[i] == "integer" || data[i] == "string" || data[i] == "bar" || data[i] == "hint")
 {
   finalOutput += "var ";
   i++;
@@ -46,7 +46,7 @@ if( data[i] == "variable" || data[i] == "var" || data[i] == "int" || data[i] == 
       {
         finalOutput += " - ";
       }
-      else if( data[i] == "times" )
+      else if( data[i] == "times" || data[i] == "tides" || data[i] == "types" )
       {
         finalOutput += " * ";
       } 
@@ -67,7 +67,7 @@ if( data[i] == "variable" || data[i] == "var" || data[i] == "int" || data[i] == 
   lineNum = 2;
 }
 //For loop
-else if( data[i] == "for" || data[i] == "four" || data[i] == "4" || data[i] == "or" )
+else if( data[i] == "for" || data[i] == "four" || data[i] == "4" || data[i] == "or" || data[i] == "boar" )
 {
   finalOutput += "for( ";
   i++;
@@ -91,7 +91,7 @@ else if( data[i] == "for" || data[i] == "four" || data[i] == "4" || data[i] == "
   tabNum = 1;
 }
 //If statement
-else if( data[i] == "if" || data[i] == "bif" )
+else if( data[i] == "if" || data[i] == "bif" || data[i] == "yes")
 {
   finalOutput += "if( ";
   i++;
@@ -105,7 +105,7 @@ else if( data[i] == "if" || data[i] == "bif" )
   tabNum = 1;
 }
 //While Loop
-else if( data[i] == "while" )
+else if( data[i] == "while" || data[i] == "oil" || data[i] == "wow" )
 {
   finalOutput += "while( ";
   i++;
@@ -121,9 +121,9 @@ else if( data[i] == "while" )
 // Console.log  /  print
 else if( data[i] == "console" || data[i] == "print" )
 {
-  if( data[i] == "console" )
+  if( data[i] == "console" || data[i] == "cancel")
   {
-    if( data[i+1] == "dot" )
+    if( data[i+1] == "dot" || data[i+1] == "thought" || data[i+1] == "done" )
     {
       i+=2;
     }
@@ -208,7 +208,7 @@ else if( data[i] == "equals" || data[i] == "equal" || data[i+1] == "equals" || d
     {
       finalOutput += "- ";
     }
-    else if( data[i] == "times" )
+    else if( data[i] == "times" || data[i] == "tides" || data[i] == "types" )
     {
       finalOutput += "* ";
     }
@@ -222,8 +222,15 @@ else if( data[i] == "equals" || data[i] == "equal" || data[i+1] == "equals" || d
     }
     else 
     {
-      while( data[i] != "plus" && data[i] != "+" && data[i] != "minus" && data[i] != "-" && data[i] != "times" )
+      while( data[i] != "plus" && data[i] != "+" && data[i] != "minus" && data[i] != "-" && data[i] != "times" || data[i] == "tides" || data[i] == "types")
       {
+        if( data[i].substring(0, 1) == "+" || data[i].substring(0,1) == "-" )
+        {
+          finalOutput = finalOutput.substring(0, finalOutput.length - 1 ) + " ";
+          finalOutput = finalOutput + data[i].substring(0,1) + " " + data[i].substring(1,2) + " ";
+          i+=2;
+          break;
+        }
         finalOutput += data[i] + "_";
         i++;
         if( i >= data.length )
