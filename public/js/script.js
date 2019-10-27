@@ -6,6 +6,8 @@ var SpeechSDK;
 var recognizer;
 var reco;
 
+var hasStarted = false;
+
 var soundContext = undefined;
 
 function Initialize(onComplete) {
@@ -71,6 +73,7 @@ function start() {
   $("#welcome").fadeOut(1000, function() {
     $("#ide").fadeIn(1000);
     addLine(1, "");
+    hasStarted = true;
   });
 }
 
@@ -84,7 +87,9 @@ function transitionHint(index) {
   var nextIndex = index + 1 < hints.length ? index + 1 : 0;
 
   $("#hint").text(hints[index]).fadeTo(1000, 1).delay(3000).fadeTo(1000, 0, function() {
-    transitionHint(nextIndex);
+    if (!hasStarted) {
+      transitionHint(nextIndex);
+    }
   }); 
 }
 
