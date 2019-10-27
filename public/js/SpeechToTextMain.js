@@ -87,7 +87,7 @@ else if( data[i] == "for" || data[i] == "four" || data[i] == "4" || data[i] == "
   finalOutput += gen[0] + " ) { \n}";
   i++;
 
-  lineNum = 3;
+  lineNum = 2;
   tabNum = 1;
 }
 //If statement
@@ -101,7 +101,7 @@ else if( data[i] == "if" || data[i] == "bif" )
   i = gen[1];
   i++;
 
-  lineNum = 3;
+  lineNum = 2;
   tabNum = 1;
 }
 //While Loop
@@ -115,7 +115,7 @@ else if( data[i] == "while" )
   i = gen[1];
   i++; 
 
-  lineNum = 3;
+  lineNum = 2;
   tabNum = 1;
 }
 // Console.log  /  print
