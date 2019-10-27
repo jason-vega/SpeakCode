@@ -48,10 +48,10 @@ function genericIncrement( data, i )
   }
 }
 
-function genericProcess( data, i )
+function genericProcess( data, i, bool )
 {
   var rtn = "";
-  while( data[i] != "plus" && data[i] != "minus" && data[i] != "times" && data[i] != "less" && data[i] != "greater" && data[i] != "equals" && data[i] != "is" && data[i] != "equal" && data[i] != "+" && data[i] != "-" && data[i] != "=" && data[i] == "types" && data[i] == "tides")
+  while( data[i] != "plus" && data[i] != "minus" && data[i] != "times" && data[i] != "less" && data[i] != "greater" && data[i] != "equals" && data[i] != "is" && data[i] != "equal" && data[i] != "+" && data[i] != "-" && data[i] != "=" && data[i] != "types" && data[i] != "tides")
   {
     if( data[i] == "variable" || data[i] == "var" || data[i] == "integer" || data[i] == "int" || data[i] == "bar" || data[i] == "hint" )
     {
@@ -62,7 +62,7 @@ function genericProcess( data, i )
     i+=1;
   }
   rtn = rtn.substring(0, rtn.length - 1);
-  
+
   if( data[i] == "is" )
   {
     i+=1;
@@ -126,12 +126,14 @@ function genericProcess( data, i )
   }
   else if( data[i] == "equals" || data[i] == "equal" || data[i] == "=" )
   {
-    if( data[i+1] == "equals" || data[i+1] == "equal" || data[i+1] == "=" ) 
+    if( bool == 1 ) 
     {
       rtn += " == ";
-      i+=1;
     }
-    rtn += " = ";
+    else
+    {
+      rtn += " = ";
+    }
   }
   i+=1;
 

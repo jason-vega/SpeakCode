@@ -6,6 +6,8 @@ var tabNum = 0;
 contents = contents.toLowerCase();
 var data = contents.replace(/[.,\/#!$%\^&\*?;:{}\_`~()]/g,"").split(/[.,!?;!@#$%^&*()<>:"'`~ ]+/);
 var i = 0;
+var boolNo = 0;
+var boolYes = 1;
 
 //alert(data);
 
@@ -71,19 +73,19 @@ else if( data[i] == "for" || data[i] == "four" || data[i] == "4" || data[i] == "
 {
   finalOutput += "for( ";
   i++;
-
-  var gen = genericProcess( data, i );
+  
+  var gen = genericProcess( data, i, boolNo);
 
   finalOutput += gen[0] + "; ";
   i = gen[1];
   i++;
 
-  gen = genericProcess( data, i );
+  gen = genericProcess( data, i, boolYes);
   finalOutput += gen[0] + "; ";
   i = gen[1];
   i++;
 
-  gen = genericIncrement( data, i );
+  gen = genericIncrement( data, i, boolNo);
   finalOutput += gen[0] + " ) { \n}";
   i++;
 
@@ -96,7 +98,7 @@ else if( data[i] == "if" || data[i] == "bif" || data[i] == "yes")
   finalOutput += "if( ";
   i++;
 
-  var gen = genericProcess( data, i );
+  var gen = genericProcess( data, i, boolYes );
   finalOutput += gen[0] + " ) {\n}";
   i = gen[1];
   i++;
@@ -110,7 +112,7 @@ else if( data[i] == "while" || data[i] == "oil" || data[i] == "wow" )
   finalOutput += "while( ";
   i++;
 
-  var gen = genericProcess( data, i );
+  var gen = genericProcess( data, i, boolYes );
   finalOutput += gen[0] + " ) {\n}";
   i = gen[1];
   i++; 
