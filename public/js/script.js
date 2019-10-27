@@ -28,7 +28,7 @@ function Initialize(onComplete) {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+function startAudioContext() {
   var audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
   var speechConfig = SpeechSDK.SpeechConfig.fromSubscription(key, region);
 
@@ -53,6 +53,16 @@ document.addEventListener("DOMContentLoaded", function() {
       RequestAuthorizationToken();
     }
   });
+}
+
+//startAudioContext();
+
+document.querySelector('body').addEventListener('click', function() {
+  if (soundContext.state != "running") {
+    soundContext.resume().then(() => {
+      startAudioContext();
+    });
+  }
 });
 
 function start() {
