@@ -2,6 +2,7 @@ function main( contents ) {
 // Translate speech to code
 var finalOutput = "";
 var lineNum = -1;
+var tabNum = 0;
 contents = contents.toLowerCase();
 var data = contents.replace(/[.,\/#!$%\^&\*;:{}\_`~()]/g,"").split(/[.,!?;!@#$%^&*()<>:"'`~ ]+/);
 var i = 0;
@@ -71,11 +72,6 @@ else if( data[i] == "for" || data[i] == "four" || data[i] == "4" || data[i] == "
   finalOutput += "for( ";
   i++;
 
-  //if( !isNaN(data[i]) )
-  //{
-  //  
-  //}
-
   var gen = genericProcess( data, i );
 
   finalOutput += gen[0] + "; ";
@@ -88,10 +84,11 @@ else if( data[i] == "for" || data[i] == "four" || data[i] == "4" || data[i] == "
   i++;
 
   gen = genericIncrement( data, i );
-  finalOutput += gen[0] + " ) { \n\t\n}";
+  finalOutput += gen[0] + " ) { \n}";
   i++;
 
   lineNum = 3;
+  tabNum = 1;
 }
 //If statement
 else if( data[i] == "if" || data[i] == "bif" )
@@ -100,11 +97,12 @@ else if( data[i] == "if" || data[i] == "bif" )
   i++;
 
   var gen = genericProcess( data, i );
-  finalOutput += gen[0] + " ) {\n\t\n}";
+  finalOutput += gen[0] + " ) {\n}";
   i = gen[1];
   i++;
 
   lineNum = 3;
+  tabNum = 1;
 }
 //While Loop
 else if( data[i] == "while" )
@@ -113,11 +111,12 @@ else if( data[i] == "while" )
   i++;
 
   var gen = genericProcess( data, i );
-  finalOutput += gen[0] + " ) {\n\t\n}";
+  finalOutput += gen[0] + " ) {\n}";
   i = gen[1];
   i++; 
 
   lineNum = 3;
+  tabNum = 1;
 }
 // Console.log  /  print
 else if( data[i] == "console" || data[i] == "print" )
@@ -238,6 +237,7 @@ else if( data[i] == "equals" || data[i] == "equal" || data[i+1] == "equals" || d
     i++;
   }
   finalOutput = finalOutput.substring(0, finalOutput.length - 1) + ";";
+  lineNum = 2;
 }
 else 
 {
@@ -250,5 +250,5 @@ else
 
 lineNum--;
 var output = finalOutput.split("\n");
-return [output, lineNum];
+return [output, lineNum, tabNum];
 }
