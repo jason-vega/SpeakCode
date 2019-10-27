@@ -6,6 +6,8 @@ var SpeechSDK;
 var recognizer;
 var reco;
 
+var functions = [];
+
 var hasStarted = false;
 
 var soundContext = undefined;
@@ -80,6 +82,13 @@ function audioConfigStart() {
         }
       } else if (stripped.length == 1 && stripped[0] == "else"){
         addElse();
+      } else if ( stripped[0] == "function" ){
+        createFunction(stripped);
+        
+      } else if ( stripped[0] == "call" ){
+        callFunction(stripped);
+      } else if ( stripped[0] == "return"){
+        returnFunction(stripped);
       }
       else {
         writeCode(main(e.result.text));
@@ -175,8 +184,8 @@ function removeLine(lineNumber, remainder) {
 }
 
 function clearConsole(numLines){
-  for ( var x = numLines; x > 0; x-- ){
-    console.log('REMOVE');
+  for ( var x = numLines; x >= 0; x-- ){
+    //console.log('REMOVE');
     removeLine(x, "");
   }
 }
@@ -190,6 +199,54 @@ function updateLineNumbers() {
     obj.innerHTML = (i + 1);
   });
 }
+
+function createFunction(stripped){
+  var fName = "";
+  for ( var n = 1; n < stripped.length; n++ ){
+    fName += stripped[n];
+  }
+  console.log(fName);
+  var str = "function " + fName + "() {";
+  var lineNum = parseInt($(document.activeElement).attr('id').replace("line", ""));
+  addLine(lineNum, str);
+  moveCursor(lineNum, -1);
+  //var arr = ["}", 1]
+  addLine(lineNum+1, "}");
+  moveCursor(lineNum, -1);
+  //writeCode(arr);
+  functions.push(fName);
+}
+
+function callFunction(words){
+  var fName = "";
+  for ( var x = 1; x < words.length; x++ ){
+    fName += words[x];
+  }
+
+  if ( functions.includes(fName) ){
+    var lineNum = parseInt($(document.activeElement).attr('id').replace("line", ""));
+    addLine(lineNum+1, fName + "();");
+    moveCursor(lineNum, -1);
+    insertTabs();
+  }
+
+}
+
+function returnFunction(words){
+  var fName = "";
+  for ( var x = 1; x < words.length; x++ ){
+    fName += words[x];
+  }
+
+ 
+  var lineNum = parseInt($(document.activeElement).attr('id').replace("line", ""));
+  addLine(lineNum+1, "return " + fName + ";");
+  moveCursor(lineNum, -1);
+  insertTabs();
+
+}
+
+
 
 function getCode() {
   var result = 'var consoleLog = []; ';
