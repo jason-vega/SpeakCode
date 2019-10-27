@@ -1,4 +1,4 @@
-var hints = ["Say \"start\" to begin coding", "First time? Say \"teach me\" to learn!"];
+var hints = ["Say \"start\" to begin coding", "...or click anywhere to begin"];
 var key = "5c60501024b541cb9054d27b0f5bcebf";
 var region = "westus";
 var language = "en-US";
@@ -38,7 +38,7 @@ function audioConfigStart() {
   reco = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
 
   reco.recognized = function(s, e) {
-    if (e.result.text !== "") {
+    if (e.result.text !== "" && hasStarted) {
       $("#console").html('<span style="color: #797777;">' + 
         $("#console").text() + '</span> <span style="color: white;">' + 
         e.result.text + '</span> ');
@@ -71,11 +71,16 @@ document.addEventListener('click', function() {
         audioConfigStart();
       });
    }
+
+  if(!hasStarted) {
+    start();
+    hasStarted = true;
+  }
 });
 
 function start() {
-  $("#welcome").fadeOut(1000, function() {
-    $("#ide").fadeIn(1000);
+  $("#welcome").fadeOut(700, function() {
+    $("#ide").fadeIn(300);
     addLine(1, "");
     hasStarted = true;
   });
@@ -276,7 +281,6 @@ $(document).delegate('.editTextLine', 'keydown', function(e) {
 $(document).ready(function () {
   $("#title").fadeTo(1250, 1, function() {
     transitionHint(0);
-    start();
   });
 
   $.get('/upload', function(data) {
