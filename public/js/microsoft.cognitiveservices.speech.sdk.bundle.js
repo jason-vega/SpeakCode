@@ -2257,6 +2257,9 @@ var MicAudioSource = /** @class */ (function () {
                 nav.webkitGetUserMedia ||
                 nav.mozGetUserMedia ||
                 nav.msGetUserMedia);
+
+            console.log(getUserMedia + " USER MEDIA!!!!");
+
             if (!!nav.mediaDevices) {
                 getUserMedia = function (constraints, successCallback, errorCallback) {
                     nav.mediaDevices
