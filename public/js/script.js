@@ -8,6 +8,12 @@ var reco;
 
 var soundContext = undefined;
 
+function Initialize(onComplete) {
+  if (!!window.SpeechSDK) {
+      onComplete(window.SpeechSDK);
+  }
+}
+
 try {
   var AudioContext = window.AudioContext || window.webkitAudioContext || false;
 
@@ -22,13 +28,7 @@ catch (e) {
     console.log("No audio context found: " + e);
 }
 
-function Initialize(onComplete) {
-  if (!!window.SpeechSDK) {
-      onComplete(window.SpeechSDK);
-  }
-}
-
-function startAudioContext() {
+function audioConfigStart() {
   var audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
   var speechConfig = SpeechSDK.SpeechConfig.fromSubscription(key, region);
 
@@ -45,6 +45,10 @@ function startAudioContext() {
   }
 
   reco.startContinuousRecognitionAsync();
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  audioConfigStart();
 
   Initialize(function(speechSdk) {
     SpeechSDK = speechSdk;
@@ -53,16 +57,14 @@ function startAudioContext() {
       RequestAuthorizationToken();
     }
   });
-}
+});
 
-//startAudioContext();
-
-document.querySelector('body').addEventListener('click', function() {
-  if (soundContext.state != "running") {
-    soundContext.resume().then(() => {
-      startAudioContext();
-    });
-  }
+document.addEventListener('click', function() {
+   if (soundContext.state != "running") {
+      soundContext.resume().then(() => {
+        audioConfigStart();
+      });
+   }
 });
 
 function start() {
