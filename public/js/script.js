@@ -39,7 +39,9 @@ function audioConfigStart() {
 
   reco.recognized = function(s, e) {
     if (e.result.text !== "") {
-      $("#console").html($("#console").html() + e.result.text + "<br>");
+      $("#console").html("<span style='color: #868686;'>" + 
+        $("#console").text() + "</span> <span style='color: white;'>" +
+        e.result.text + "</span> ");
 
       document.getElementById("console").scrollTop =
         document.getElementById("console").scrollHeight;

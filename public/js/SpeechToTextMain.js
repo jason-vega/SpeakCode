@@ -2,10 +2,11 @@ function main( contents ) {
 // Translate speech to code
 var finalOutput = "";
 var lineNum = -1;
-var data = contents.split(/[.,!?;!@#$%^&*()<>:"'`~ ]/);
+contents = contents.toLowerCase();
+var data = contents.split(/[,./<>?!@#$%^& ]+/);
 var i = 0;
 
-alert(data);
+//alert(data);
 
 // Variables
 if( data[i] == "variable" || data[i] == "var" || data[i] == "int" || data[i] == "integer" || data[i] == "string" )

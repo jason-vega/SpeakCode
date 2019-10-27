@@ -64,6 +64,10 @@
   background-color: white;
 }
 
+#console {
+  background-color: #191919;
+}
+
 @media screen and (min-width: 768px) {
   #title {
     font-size: calc(768px * 8 / 100);
