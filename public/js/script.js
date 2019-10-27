@@ -74,6 +74,12 @@ function audioConfigStart() {
       }
       else if (stripped.length == 1 && stripped[0] == "run") {
         run();
+      } else if (stripped.length == 2 && stripped[0] == "clear" ){
+        if ( stripped[1] == 'code' || stripped[1] == 'console'){
+          clearConsole($(".editTextLine").length);
+        }
+      } else if (stripped.length == 1 && stripped[0] == "else"){
+        addElse();
       }
       else {
         writeCode(main(e.result.text));
@@ -168,6 +174,13 @@ function removeLine(lineNumber, remainder) {
   updateLineNumbers();
 }
 
+function clearConsole(numLines){
+  for ( var x = numLines; x > 0; x-- ){
+    console.log('REMOVE');
+    removeLine(x, "");
+  }
+}
+
 function updateLineNumbers() {
   $(".editTextLine").each(function(i, obj) {
     obj.id = "line" + (i + 1);
@@ -210,6 +223,93 @@ function writeCode(data) {
 
     moveCursor(baseNum + finalPos, -1);
   }
+
+  insertTabs();
+}
+
+function addElse(){
+  // Check current line has an if
+  var current = $(document.activeElement).val();
+  var totalLines = $(".editTextLine").length;
+  var lineNum = parseInt($(document.activeElement).attr('id').replace("line", ""));
+    if ( current.includes("if") ){
+
+      // Iterate until finds close brace
+      var numBraces = 0;
+      lineNum++;
+
+      for ( ; lineNum <= totalLines; lineNum++){
+        current = $("#line" + lineNum).val();
+
+        if ( current.includes("{") ){
+          numBraces++;
+        }
+
+        if ( current.includes("}")){
+          // Brace found, insert else here
+          //console.log(numBraces);
+          if ( numBraces == 0 ){
+            $('#line' + lineNum).val(current + " else {");
+            moveCursor(lineNum, -1);
+            var arr = ["}", 1]
+            writeCode(arr);
+            break;
+          } else {
+            numBraces--;
+          }
+        }
+      }
+
+      
+  }
+}
+
+function insertTabs(){
+  var totalLines = $(".editTextLine").length;
+  var braces = 0;
+  for ( var i = 1; i < totalLines; i++ ){
+    var curLine = $("#line" + i);
+
+    var onLine = false;
+    // Check if line has a { at end
+    if ( curLine.val().includes("{") ){
+      braces++;
+      onLine = true;
+    }
+
+    if ( curLine.val().includes("}") ){
+      braces--;
+    }
+
+    if ( braces > 0 ){
+
+      // Count numbers of tabs
+      var curTabs = 0;
+      var chars = Array.from(curLine.val());
+      //console.log(chars);
+      for( var ch of chars ){
+        //console.log(ch);
+        if ( ch === "\t" ){
+          curTabs++;
+        }
+      }
+
+
+      var numBraces = braces;
+
+      if ( onLine ){
+        numBraces--;
+      }
+
+      for ( var x = curTabs; x < numBraces; x++ ){
+        $('#line' + i).val("\t" + curLine.val());
+      }
+      
+    }
+
+    //console.log("Iterating");
+  }
+  curLine
 }
 
 function run() {
