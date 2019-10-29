@@ -107,7 +107,7 @@ else if( data[i] == "if" || data[i] == "bif" || data[i] == "yes")
   tabNum = 1;
 }
 //While Loop
-else if( data[i] == "while" || data[i] == "oil" || data[i] == "wow" )
+else if( data[i] == "while" || data[i] == "oil" || data[i] == "wow" || data[i] == "wild" )
 {
   finalOutput += "while( ";
   i++;

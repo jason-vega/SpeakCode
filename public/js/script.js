@@ -1,4 +1,4 @@
-var hints = ["Say \"start\" to begin coding", "...or click anywhere to begin"];
+var hints = ["A more accessible JavaScript IDE", "Hands-free programming experience", "Compile your voice"];
 var key = "5c60501024b541cb9054d27b0f5bcebf";
 var region = "westus";
 var language = "en-US";
@@ -50,8 +50,6 @@ function audioConfigStart() {
 
       var stripped = e.result.text.toLowerCase()
         .replace(/[,./!@#$%^&*();']/g, "").split(" ");
-
-      console.log(stripped);
 
       if (stripped.length == 3 && stripped[0] == "delete" && // Delete line
         stripped[1] == "line" && Number.isInteger(parseInt(stripped[2]))) {
@@ -184,10 +182,10 @@ function removeLine(lineNumber, remainder) {
 }
 
 function clearConsole(numLines){
-  for ( var x = numLines; x >= 0; x-- ){
-    //console.log('REMOVE');
+  for ( var x = numLines; x > 0; x-- ){
     removeLine(x, "");
   }
+  //removeLine(, "");
 }
 
 function updateLineNumbers() {
